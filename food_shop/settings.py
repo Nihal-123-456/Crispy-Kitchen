@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-*@tz8#yzky&l6n=t8wg#knlovev1iz)fkj06+0t#52sc=mn67x
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ['https://food-shop-siej.onrender.com','https://*.127.0.0.1']
 
 # Application definition
 
