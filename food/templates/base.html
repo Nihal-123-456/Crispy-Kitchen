@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Document {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <nav class="flex items-center justify-between flex-wrap bg-primary-subtle p-6 px-10">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <span class="font-semibold text-xl tracking-tight text-blue-900"><a href="/">Crispy Kitchen</a></span>
+    </div>
+    <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 border rounded text-white border-white-400 hover:text-white hover:border-white">
+            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+        </button>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto px-10">
+        <a href="{% url 'specials' %}" class="block mt-4 lg:inline-block lg:mt-0 text-blue-900 hover:text-red-900 hover:font-black mr-4">
+            Special Items
+        </a>
+        {% if request.user.is_authenticated %}
+            <div class="text-md lg:flex-grow">
+                <a href="{% url 'order_report' %}" class="block mt-4 lg:inline-block lg:mt-0 text-blue-900 hover:text-red-900 hover:font-black mr-4">
+                    Order History
+                </a>
+                <a href="{% url 'cart_report' %}" class="block mt-4 lg:inline-block lg:mt-0 text-blue-900 hover:text-red-900 hover:font-black mr-4">
+                    View Cart
+                </a>
+            </div>
+            <div class="flex w-auto">
+                <div class="text-blue-900 my-auto font-black px-5">Welcome, {{ request.user.first_name }} {{request.user.last_name}}</div>
+
+                <form method="post" action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button class="mx-2 inline-block font-medium text-sm px-4 py-2 
+                  leading-none bg-blue-900 rounded text-white border-white hover:border-transparent 
+                  hover:text-dark hover:bg-red-700 mt-4 lg:mt-0">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="text-md lg:flex-grow"></div>
+            <div>
+                <a href="{% url 'login' %}" class="mr-2 inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-red-700 mt-4 lg:mt-0">Login</a>
+            </div>
+            <div>
+                <a href="{% url 'signup' %}" class="inline-block font-medium text-sm px-4 py-2 leading-none bg-blue-900 rounded text-white border-white hover:border-transparent hover:text-gray-800 hover:bg-red-700 mt-4 lg:mt-0">Register</a>
+            </div>
+        {% endif %}
+    </div>
+</nav>
+    {% for message in messages %}
+      <div class="alert text-bg-{{message.tags}}">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <div class="row px-5 pt-5 pb-3 justify-content-center" style="background-color: #cfe2ff;">
+            <div class="col-md-6">
+                <p>Copyright © Crispy Kitchen. All Rights Reserved </p>
+                <h5 class="fw-bold">Follow Us</h5>
+                <div class="icons">
+                    <img src="Images/LinkedIn.png" alt="">
+                    <img src="Images/YouTube.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="fw-bold">About us</h5>
+                <li>About</li>
+                <li>Contact Us</li>
+                <li>Career</li>
+                <li>Culture</li>
+            </div>
+            <div class="col-md-3">
+                <h5 class="fw-bold">About us</h5>
+                <li>About</li>
+                <li>Contact Us</li>
+                <li>Career</li>
+                <li>Culture</li>
+            </div>
+            <hr class="mt-5">
+            <p class="text-center mt-3">Copyright © Crispy Kitchen. All Rights Reserved </p>
+        </div>
+       
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

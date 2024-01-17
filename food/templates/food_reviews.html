@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title%}Reviews{% endblock %}
+{% block content %}
+<div class="card m-2">
+    <h5 class="p-2">Reviews : {{comments | length}}</h5>
+    {% for cmnt in comments %}
+    <div class="card-body border m-2">
+        <p><b>{{cmnt.user.username}}</b> {{cmnt.created_on}}</p>
+        <p>{{cmnt.rating}}</p>
+        <p>{{cmnt.comment}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

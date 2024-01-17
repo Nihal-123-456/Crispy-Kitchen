@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mt-5 container">
+    <h2>Order History</h2>
+        <div class="mt-5">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Food</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for o in OrderReport %}
+                    <tr>
+                      <td>{{ o.food.name }}</td>
+                      <td>{{ o.order_price }} T.K</td>
+                      <td>{{ o.order_date|date:"F d, Y" }}</td>
+                      <td>
+                          <div class="d-flex">
+                              <a class="btn btn-warning mx-2" href="{% url 'review' o.food.id %}">Review Food</a>
+                          </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+  </div>
+{% endblock %}

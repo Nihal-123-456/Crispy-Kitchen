@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Home {% endblock %}
+{% block content %} 
+    <div class="d-flex px-5 pt-3 align-items-center gap-4">
+
+        <div class="col-6">
+        <h1 class="fw-bold fs-5 mb-2">Welcome to Crispy Kitchen</h1>
+        <p>
+            Here culinary delight meets speed, bringing you an extraordinary 
+            fast-food experience like no other! At our establishment, we understand that in the hustle and 
+            bustle of modern life, savoring delicious meals should never be compromised by time constraints. 
+            That's why we've curated a menu that boasts a fusion of flavors, all served with the swiftness you 
+            crave.</p>
+        </div>
+        <div class="col-6">
+    <img style="height: 100%; width: 650px;" src="{% static 'food-1.jpeg' %}" />
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap p-4">
+        <div class="col-2 bg-white p-3" >
+        <h5 class="fw-bold mb-2 ms-3">All Categories</h5>
+        {% for cat in category %}
+        <div class="form-check">
+            <label class="form-check-label" for="flexRadioDefault1">
+                <a href="{% url 'food_category' cat.slug %}" class="text-decoration-none text-dark btn btn-success mt-2" style="font-weight: bold;">
+                {{cat.name}}</a>
+            </label>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="col-10 p-3">
+        <h4 class="fw-bold">{{food | length}} results found</h4>
+        <div class="d-flex flex-wrap pt-5">
+            {% for f in food %}
+            <div class="col-sm-3">
+            <div class="card m-2">
+                <div class="card-body">
+                <img src="{{f.image.url}}" class="card-img-top" alt="{{f.name}}">
+                <h5 class="card-title mt-2 fw-bold fs-6">{{f.name}}</h5>
+                <p class="card-text">{{f.description}}</p>
+                <p class="fw-bold mt-2">Price: {{f.price}} T.K</p>
+                <p class="mt-2">
+                    Category : {% for cat in f.category.all %}
+                    <button class="btn btn-primary btn-sm m-2 fw-bold" disabled>
+                    {{cat.name}}
+                    </button>
+                    {% endfor %}
+                </p>
+                <a href="{% url 'food_review' f.id %}" class="btn btn-danger mt-2 fw-bold">Check Reviews</a>
+                <a href="{% url 'add_to_cart' f.pk %}" class="btn btn-primary mt-2"><i class="fa fa-shopping-cart" style="font-size:24px"></i>  Add to cart</a>
+                <a href="{% url 'order_food' f.pk %}" class="btn btn-primary mt-2 fw-bold">Buy Now</a>
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+{% endblock %}

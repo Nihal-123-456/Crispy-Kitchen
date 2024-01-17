@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="mt-5 container">
+    <h2>Cart Items</h2>
+        <div class="mt-5">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Food</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for c in CartReport %}
+                    <tr>
+                      <td>{{ c.food.name }}</td>
+                      <td>{{ c.food_price }} T.K</td>
+                      <td>
+                          <div class="d-flex">
+                              <a class="btn btn-warning mx-2" href="{% url 'remove_cart' c.id %}">Remove Item</a>
+                          </div>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  <tr><td class="fw-bold">Total Cost: {{total_cost}} T.k</td></tr>
+                </tbody>
+              </table>
+              {% if CartReport %}
+                <a href="{% url 'order_food_cart' %}" class="btn btn-primary fw-bold">Buy All Items</a>
+              {% else %}
+                <p>Cart is Empty</p>
+              {% endif %}
+        </div>
+  </div>
+{% endblock %}
