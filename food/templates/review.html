@@ -2,13 +2,15 @@
 {% block title%}Review{% endblock %}
 {% block content %}
     {% load crispy_forms_tags %}
-    <div class="card m-2">
+    <div class="card m-2 w-50 m-auto p-3 mt-5 mb-5">
         <div class="card-body">
             <form method="post">
-                <h1>Give your review</h1>
+                <div class="main-text mb-5">
+                    <h2>Give Your Review</h2>
+                  </div>
                 {% csrf_token %}
                 {{comment_form | crispy}}
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="detail-btns btn btn-primary" type="submit">Submit</button>
             </form>
         </div>
     </div>

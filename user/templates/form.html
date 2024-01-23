@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %} Signup {% endblock %}
+<link rel="stylesheet" href="{% static 'css/food.css' %}">
 {% block content %}
+    <div class="main-text mt-5" style="text-align: center;">
+        <h2>Signup Now!</h2>
+        <p>Fill out the information below</p>
+    </div>
     {% load crispy_forms_tags %}
-    <form class="m-auto mt-5 mb-5" method="post" style="width: 50%;" novalidate>
-        {% csrf_token %}
-        <!-- {{form|crispy}} -->
-        {% for f in form %}
-            {{f.label_tag}}
-            {{f}}
-            <p class="text-danger">{{f.errors|striptags}}</p>
-        {% endfor %}
-        <button class="btn btn-primary mt-2" type="submit" style="font-weight: bold;">Submit</button>
-    </form>
+    <div class="card m-2 w-50 m-auto mt-5 mb-5">
+        <div class="d-flex card-body p-1 gap-3 justify-content-center">
+            <form class="col-sm-12 m-auto mt-5 mb-5" method="post" style="width: 50%;" novalidate>
+                {% csrf_token %}
+                <!-- {{form|crispy}} -->
+                {% for f in form %}
+                    <div class="fw-bold">{{f.label_tag}}</div>
+                    <div class="mt-2 mb-3">{{f}}</div>
+                    
+                    <p class="text-danger">{{f.errors|striptags}}</p>
+                {% endfor %}
+                <button class="btn btn-primary mt-2" type="submit" style="font-weight: bold;">Signup</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

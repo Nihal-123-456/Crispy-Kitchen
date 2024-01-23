@@ -1,37 +1,42 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block title %} Cart {% endblock %}
+<link rel="stylesheet" href="{% static 'css/food.css' %}">
 {% block content %}
   <div class="mt-5 container">
-    <h2>Cart Items</h2>
-        <div class="mt-5">
-            <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Food</th>
-                    <th>Price</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for c in CartReport %}
-                    <tr>
-                      <td>{{ c.food.name }}</td>
-                      <td>{{ c.food_price }} T.K</td>
-                      <td>
-                          <div class="d-flex">
-                              <a class="btn btn-warning mx-2" href="{% url 'remove_cart' c.id %}">Remove Item</a>
-                          </div>
-                      </td>
-                    </tr>
-                  {% endfor %}
-                  <tr><td class="fw-bold">Total Cost: {{total_cost}} T.k</td></tr>
-                </tbody>
-              </table>
-              {% if CartReport %}
-                <a href="{% url 'order_food_cart' %}" class="btn btn-primary fw-bold">Buy All Items</a>
+    <p class="mb-5 fw-bold" style="font-size: 22px;">{{CartReport | length}} items in cart</p>
+    <div class="mb-5">
+      {% for f in CartReport %}
+      <div class="">
+      <div class="mb-4">
+          <div class="d-flex justify-content-between p-3" style="box-shadow: 4px 4px 8px gray; border-radius: 10px;">
+            <div class="d-flex">
+              <img src="{{f.food.image.url}}" class="" alt="{{f.name}}" style="width: 100px; height: 80px; border-radius: 10px;">
+              <div><h5 class="card-title mt-4 fw-bold fs-6 ms-4">{{f.food.name}}</h5></div>
+            </div>
+            <div class="d-flex justify-content-between">
+              {% if f.food.discount_price %}
+                <p class="fw-bold mt-4 pe-3 text-orange-500 ms-5">৳ {{f.food.discount_price}}</p>
               {% else %}
-                <p>Cart is Empty</p>
+                <p class="fw-bold mt-4 pe-3 text-orange-500 ms-5">৳ {{f.food_price}}</p>
               {% endif %}
-        </div>
-  </div>
+                <div>
+                  <a class="detail-btns btn btn-danger fw-bold mt-3 me-3 ms-3" href="{% url 'remove_cart' f.id %}">Remove Item</a>
+                </div>
+            </div>
+          </div>
+      </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+      {% if CartReport %}
+        <p class="fw-bold w-25 m-auto p-2 text-light mb-3" style="text-align: center; background-color: #0066a7; border-radius: 10px;">Total Cost: ৳ {{total_cost}}</p>
+        <a href="{% url 'order_food_cart' %}" class="detail-btns btn fw-bold mb-5 text-light" style="background: #ff9100;">Buy All Items</a>
+      {% else %}
+        <p style="text-align: center; font-size: 24px;" class="fw-bold mb-5">Sorry! Cart is Empty</p>
+        <img src="{% static 'nodata.png' %}" alt="" class="m-auto pb-5">
+      {% endif %}
+    </div>
+    
 {% endblock %}

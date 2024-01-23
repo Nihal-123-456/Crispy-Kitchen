@@ -36,7 +36,7 @@ class SignupView(FormView):
         return super().form_valid(form)
 
 class UserLoginView(LoginView):
-    template_name = 'form.html'
+    template_name = 'login.html'
     def get_success_url(self):
         messages.success(self.request, 'Signin Successful')
         return reverse_lazy('home')
@@ -112,7 +112,12 @@ class CartReport(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        total_cost = sum(cart.food_price for cart in context['CartReport'] if cart.food_price is not None)
+        total_cost = 0
+        for cart in context['CartReport']:
+            if cart.food.discount_price is not None:
+                total_cost += cart.food.discount_price
+            else:
+                total_cost += cart.food_price
 
         context['total_cost'] = total_cost
         return context

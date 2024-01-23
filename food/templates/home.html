@@ -1,58 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} Home {% endblock %}
+<link rel="stylesheet" href="{% static 'css/food.css' %}">
 {% block content %} 
-    <div class="d-flex px-5 pt-3 align-items-center gap-4">
-
-        <div class="col-6">
-        <h1 class="fw-bold fs-5 mb-2">Welcome to Crispy Kitchen</h1>
-        <p>
-            Here culinary delight meets speed, bringing you an extraordinary 
-            fast-food experience like no other! At our establishment, we understand that in the hustle and 
-            bustle of modern life, savoring delicious meals should never be compromised by time constraints. 
-            That's why we've curated a menu that boasts a fusion of flavors, all served with the swiftness you 
-            crave.</p>
+    <section class="home mb-5" id="home">
+        <div class="home-text">
+            <h1><span>Welcome</span> to The world of Tasty & Fresh Food</h1>
+            <p>Here culinary delight meets speed, bringing you an extraordinary fast-food experience like no other! </p>
+            <a href="#all-foods" class="btn food-menu">Choose any Food</a>
         </div>
-        <div class="col-6">
-    <img style="height: 100%; width: 650px;" src="{% static 'food-1.jpeg' %}" />
-        </div>
-    </div>
 
-    <div class="d-flex flex-wrap p-4">
-        <div class="col-2 bg-white p-3" >
-        <h5 class="fw-bold mb-2 ms-3">All Categories</h5>
+        <div class="home-img">
+            <img src="{% static 'food-1.png' %}" alt="home">
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="main-text">
+            <h2>Food Categories</h2>
+            <p>Browse by Category</p>
+        </div>
+    </section>
+
+    <div class="d-flex justify-content-center m-auto gap-5 mb-5">
         {% for cat in category %}
-        <div class="form-check">
-            <label class="form-check-label" for="flexRadioDefault1">
-                <a href="{% url 'food_category' cat.slug %}" class="text-decoration-none text-dark btn btn-success mt-2" style="font-weight: bold;">
-                {{cat.name}}</a>
-            </label>
+        <div class="cat-list">
+            <div >
+                <a href="{% url 'food_category' cat.slug %}" class="" >
+                <img class="container-img" src="{{cat.image.url}}" alt="{{cat.name}}">
+                </a>
+            </div>
+            <div class="mt-2 container-text">
+                <a href="{% url 'food_category' cat.slug %}" class="" >
+                    {{cat.name}}</a>
+            </div>
         </div>
         {% endfor %}
+    </div>
+
+    <div class="food-detail m-auto mb-5" id="all-foods">
+        <div class="main-text mb-3 ms-3">
+            <h2>List of Food</h2>
+            <p >{{food | length}} results found</p>
         </div>
-        <div class="col-10 p-3">
-        <h4 class="fw-bold">{{food | length}} results found</h4>
-        <div class="d-flex flex-wrap pt-5">
+        <div>
+        <div class="d-flex flex-wrap">
             {% for f in food %}
-            <div class="col-sm-3">
-            <div class="card m-2">
-                <div class="card-body">
-                <img src="{{f.image.url}}" class="card-img-top" alt="{{f.name}}">
-                <h5 class="card-title mt-2 fw-bold fs-6">{{f.name}}</h5>
-                <p class="card-text">{{f.description}}</p>
-                <p class="fw-bold mt-2">Price: {{f.price}} T.K</p>
-                <p class="mt-2">
-                    Category : {% for cat in f.category.all %}
-                    <button class="btn btn-primary btn-sm m-2 fw-bold" disabled>
-                    {{cat.name}}
-                    </button>
-                    {% endfor %}
-                </p>
-                <a href="{% url 'food_review' f.id %}" class="btn btn-danger mt-2 fw-bold">Check Reviews</a>
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'add_to_cart' f.pk %}" class="btn btn-primary mt-2"><i class="fa fa-shopping-cart" style="font-size:24px"></i>  Add to cart</a>
-                    <a href="{% url 'order_food' f.pk %}" class="btn btn-primary mt-2 fw-bold">Buy Now</a>
+            <div class="col-sm-4 mb-4">
+            <div class="dtl-card card m-2 ">
+                <div class="">
+                {% if f.is_special %}
+                <div class="disc-div">
+                    <img src="{{f.image.url}}" class="card-img-top" alt="{{f.name}}">
+                    <p class="discount">{{f.discount_percentage}}% discount</p>
+                </div>
+                {% else %}
+                    <img src="{{f.image.url}}" class="card-img-top" alt="{{f.name}}">
                 {% endif %}
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title mt-4 fw-bold fs-6 ps-3">{{f.name}}</h5>
+                    {% if f.discount_price %}
+                    <div>
+                        <p class="fw-bold mt-4 pe-3 text-orange-500 text-decoration-line-through">৳ {{f.price}}</p>
+                        <p class="fw-bold mt-2 pe-3 text-orange-500 mb-2 " style="color: red; font-size: 18px;">৳ {{f.discount_price}}</p>
+                    </div>
+                    {% else %}
+                        <p class="fw-bold mt-4 pe-3 text-orange-500 ">৳ {{f.price}}</p>
+                    {% endif %}
+                </div>
+                <p class="card-text ps-3 pe-2"><small>{{ f.description }}</small></p>
+                
+                <div class="ps-3 pe-3 mb-3">
+                    <a href="{% url 'food_review' f.id %}" class="detail-btns btn btn-danger mt-3 fw-bold" style="background: #ff9100;">Check Reviews</a>
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'add_to_cart' f.pk %}" class="detail-btns btn btn-danger mt-3 "><i class="fa fa-shopping-cart" style="font-size:24px"></i>  Add to cart</a>
+                    <a href="{% url 'order_food' f.pk %}" class="detail-btns btn btn-primary mt-3 fw-bold ms-2">Buy Now</a>
+                {% endif %}
+                </div>
                 </div>
             </div>
             </div>
@@ -60,4 +84,17 @@
         </div>
         </div>
     </div>
+
+    <section class="about" id="about">
+        <div class="about-img">
+            <img src="{% static 'food-2.png' %}" alt="">
+        </div>
+
+        <div class="about-text">
+            <h2>The Delicious Food<br> For a Good Mood</h2>
+            <p>Here culinary delight meets speed, bringing you an extraordinary fast-food experience like no other! <br><br> At our establishment, we understand that in the hustle and bustle of modern life, savoring delicious meals should never be compromised by time constraints. That's why we've curated a menu that boasts a fusion of flavors, all served with the swiftness you crave.</p>
+            <a href="#all-foods" class="btn food-menu">Choose any food</a>
+        </div>
+
+    </section>
 {% endblock %}

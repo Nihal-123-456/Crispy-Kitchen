@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Category(models.Model):
+    image = models.ImageField(upload_to='food/media/uploads', null=True, blank=True)
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50,unique=True, null=True, blank=True)
 
@@ -17,6 +18,7 @@ class Food(models.Model):
     category = models.ManyToManyField(Category)
     is_special = models.BooleanField(default=False)
     discount_percentage = models.PositiveIntegerField(default=0)
+    discount_price = models.DecimalField(max_digits=8, decimal_places=2,  null=True, blank=True)
 
     def __str__(self):
         return self.name
