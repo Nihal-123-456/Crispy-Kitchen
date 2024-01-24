@@ -19,7 +19,8 @@
                     
                     <p class="text-danger">{{f.errors|striptags}}</p>
                 {% endfor %}
-                <button class="btn btn-primary mt-2" type="submit" style="font-weight: bold;">Signup</button>
+                <button class="btn btn-primary mt-4 w-100" type="submit" style="font-weight: bold;">Signup</button>
+                <p class="mt-2 text-center">Already have an Account? <a class="text-primary" href="{% url 'login' %}">Log in!</a></p>
             </form>
         </div>
     </div>
