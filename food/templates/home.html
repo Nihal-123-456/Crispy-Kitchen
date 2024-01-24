@@ -47,7 +47,7 @@
         <div class="d-flex flex-wrap">
             {% for f in food %}
             <div class="col-sm-4 mb-4">
-            <div class="dtl-card card m-2 ">
+            <div class="dtl-card card m-2 h-100">
                 <div class="">
                 {% if f.is_special %}
                 <div class="disc-div">
@@ -71,7 +71,11 @@
                 <p class="card-text ps-3 pe-2"><small>{{ f.description }}</small></p>
                 
                 <div class="ps-3 pe-3 mb-3">
+                    {% if f.is_special %}
                     <a href="{% url 'food_review' f.id %}" class="detail-btns btn btn-danger mt-3 fw-bold" style="background: #ff9100;">Check Reviews</a>
+                    {% else %}
+                    <a href="{% url 'food_review' f.id %}" class="detail-btns btn btn-danger fw-bold" style="background: #ff9100; margin-top: 55px;">Check Reviews</a>
+                    {% endif %}
                     {% if request.user.is_authenticated %}
                     <a href="{% url 'add_to_cart' f.pk %}" class="detail-btns btn btn-danger mt-3 "><i class="fa fa-shopping-cart" style="font-size:24px"></i>  Add to cart</a>
                     <a href="{% url 'order_food' f.pk %}" class="detail-btns btn btn-primary mt-3 fw-bold ms-2">Buy Now</a>
