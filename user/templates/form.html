@@ -10,7 +10,7 @@
     {% load crispy_forms_tags %}
     <div class="card m-2 w-50 m-auto mt-5 mb-5">
         <div class="d-flex card-body p-1 gap-3 justify-content-center">
-            <form class="col-sm-12 m-auto mt-5 mb-5" method="post" style="width: 50%;" novalidate>
+            <form class="col-sm-12 m-auto mt-5 mb-5" method="post" style="width: 75%;" novalidate>
                 {% csrf_token %}
                 <!-- {{form|crispy}} -->
                 {% for f in form %}

@@ -213,3 +213,44 @@ section{
 .disc-div{
     position: relative;
 }
+@media only screen and (max-width: 768px){
+	.container{
+		margin-top: 200px;
+		width: 1000px;
+		margin-bottom: -40px;
+	}
+	.dtl-card{
+		width: 400px;
+	}
+	.foot-ttl{
+		margin-top: 20px;
+	}
+	.home-text h1{
+		font-size: 2.2rem;
+		line-height: 1.2;
+		margin-bottom: 2rem;
+	}
+	.home-text p{
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--second-color);
+		line-height: 32px;
+		margin-bottom: 2.3rem;
+	}
+	.about-text h2{
+		font-size: 2.2rem;
+		line-height: 1.2;
+		margin-bottom: 2rem;
+	}
+	.about-text p{
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--second-color);
+		line-height: 32px;
+		margin-bottom: 2.3rem;
+	}
+	.frm-img{
+		visibility: hidden;
+		width: 0px;
+	}
+}
