@@ -11,6 +11,7 @@ djangorestframework
 EasyProcess
 entrypoint2
 filelock
+gunicorn
 Markdown
 MouseInfo
 mss
